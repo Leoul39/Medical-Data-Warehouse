@@ -85,14 +85,10 @@ async def scrape_channel(client, channel_username, writer, media_dir, cache):
 
             media_path = None
             if message.media:
-                # Create a unique filename for the photo
                 filename = f"{channel_username}_{message.id}.{message.media.document.mime_type.split('/')[-1]}" if hasattr(message.media, 'document') else f"{channel_username}_{message.id}.jpg"
                 media_path = os.path.join(media_dir, filename)
-                # Download the media to the specified directory if it's a photo
                 await client.download_media(message.media, media_path)
                 logger.info(f"Downloaded media for message ID {message.id}.")
-            
-            # Write the channel title along with other data
             writer.writerow([channel_title, channel_username, message.id, remove_emoji(message.message), message.date, media_path])
             logger.info(f"saved message ID {message.id} from {channel_username} to csv format.")
             logger.info(f"Processed message ID {message.id} from {channel_username}.")
@@ -126,7 +122,7 @@ async def main():
         # List of channels to scrape
         channels = [
             '@CheMed123',
-            '@lobelia4cosmetics' ,
+            '@lobelia4cosmetics' 
 
         ]
 
